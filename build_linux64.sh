@@ -18,6 +18,7 @@ cd nwjs-build # nwjs-build
 # get depot tool
 git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
 export PATH=`pwd`/depot_tools:"$PATH"
+export GYP_DEFINES=target_arch=x64
 
 # get nwjs sources
 mkdir -p nwjs
@@ -49,8 +50,8 @@ cd src/content/nw
 git checkout $MAIN
 cd ../../.. # nwjs-build/nwjs
 
-git clone https://github.com/nwjs/node src/third_party/node
-cd src/third_party/node
+git clone https://github.com/nwjs/node src/third_party/node-nw
+cd src/third_party/node-nw
 git checkout $MAIN
 cd ../../.. # nwjs-build/nwjs
 
@@ -71,43 +72,19 @@ gn gen out/nw --args='is_debug=false is_component_ffmpeg=true target_cpu="x64" n
 cd ../../.. # ./
 
 # replace python build script lines
+echo -e "434,435c434,436
+<       '--enable-demuxer=ogg,matroska,wav,flac,mp3,mov',
+<       '--enable-parser=opus,vorbis,flac,mpegaudio',
+---
+>       '--enable-decoder=aac,ac3,aac3,h264,mp1,mp2,mp3,mpeg4,mpegvideo,hevc,flv,dca,flac',
+>       '--enable-demuxer=aac,ac3,h264,mp3,mp4,m4v,matroska,wav,mpegvideo,mpegts,mov,avi,flv,dts,dtshd,vc1,flac,ogg,mov',
+>       '--enable-parser=aac,ac3,aac3,h261,h263,h264,opus,vorbis,mepgvideo,mpeg4video,mpegaudio,dca,hevc,vc1,flac'," > build_ffmpeg.patch
 
-echo -e "--- build_ffmpeg.py	2016-10-18 19:45:18.883827200 +0200
-+++ build_ffmpeg.py	2016-10-18 19:46:20.235113900 +0200
-@@ -551,9 +551,9 @@
- 
-   # Google Chrome & ChromeOS specific configuration.
-   configure_flags['Chrome'].extend([
--      '--enable-decoder=aac,h264,mp3',
--      '--enable-demuxer=aac,mp3,mov',
--      '--enable-parser=aac,h264,mpegaudio',
-+      '--enable-decoder=aac,h264,mp3,eac3,ac3,hevc,mpeg4,mpegvideo,mp2,mp1,flac',
-+      '--enable-demuxer=aac,mp3,mov,dtshd,dts,avi,mpegvideo,m4v,h264,vc1,flac',
-+      '--enable-parser=aac,h264,mpegaudio,mpeg4video,mpegvideo,ac3,h261,vc1,h263,flac',
-   ])
- 
-   # ChromiumOS specific configuration." > build_ffmpeg.patch
 
-echo -e "--- ffmpeg_common.cc	2016-10-18 19:31:07.914680100 +0200
-+++ ffmpeg_common.cc	2016-10-18 19:26:47.936317250 +0200
-@@ -126,6 +126,10 @@
-   switch (audio_codec) {
-     case kCodecAAC:
-       return AV_CODEC_ID_AAC;
-+    case kCodecAC3:
-+      return AV_CODEC_ID_AC3;
-+    case kCodecEAC3:
-+      return AV_CODEC_ID_EAC3;
-     case kCodecALAC:
-       return AV_CODEC_ID_ALAC;
-     case kCodecMP3:" > ffmpeg_common.patch
+patch -p1 nwjs-build/nwjs/src/third_party/ffmpeg/chromium/scripts/build_ffmpeg.py < build_ffmpeg.patch
 
-patch -R nwjs-build/nwjs/src/third_party/ffmpeg/chromium/scripts/build_ffmpeg.py < build_ffmpeg.patch
-
-# patch ffmpeg lib for ac3
-patch -R nwjs-build/nwjs/src/media/ffmpeg/ffmpeg_common.cc < ffmpeg_common.patch
-
-rm ffmpeg_common.patch build_ffmpeg.patch
+# clean patch files
+rm build_ffmpeg.patch
 
 cd nwjs-build/nwjs/src # nwjs-build/nwjs/src
 
@@ -129,12 +106,12 @@ cd ..
 ./chromium/scripts/copy_config.sh 
 
 # generate gyp for ffmpeg build
-./chromium/scripts/generate_gyp.py
+./chromium/scripts/generate_gn.py
 
 cd ../.. # nwjs-build/nwjs/src
 
 # generate ninja build files
-GYP_CHROMIUM_NO_ACTION=0 ./build/gyp_chromium third_party/node/node.gyp
+GYP_CHROMIUM_NO_ACTION=0 ./build/gyp_chromium -I third_party/node-nw/common.gypi third_party/node-nw/node.gyp
 
 # build nwjs
 ninja -C out/nw nwjs
