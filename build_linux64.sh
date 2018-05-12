@@ -1,13 +1,6 @@
 #!/bin/bash
-#for ubuntu linux64 atm. run : `./build_linux64.sh nw18`
 
-if [ -z "$1" ]
-  then
-    echo "Error: specify a target branch as first argument, e.g: nw18"
-    exit 0
-else
-    MAIN=$1
-fi
+MAIN=`date +'%d.%m.%Y'`
 
 echo "Building nwjs from sources, with ffmpeg patches [branch: $MAIN]"
 
