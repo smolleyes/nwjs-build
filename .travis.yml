@@ -6,6 +6,10 @@ dist: trusty
 
 sudo: required
 
+cache:
+  directories:
+  - src
+
 compiler:
   - clang
   - gcc

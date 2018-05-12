@@ -1,6 +1,6 @@
 #!/bin/bash
-
-MAIN=`date +'%d.%m.%Y'`
+set -x
+MAIN='nw27'
 
 echo "Building nwjs from sources, with ffmpeg patches [branch: $MAIN]"
 
@@ -38,7 +38,7 @@ echo -e "solutions = [
 cache_dir = None" > .gclient
 
 # get repos
-git clone --depth 1  https://github.com/nwjs/nw.js.git src/content/nw 
+git clone --depth 1 https://github.com/nwjs/nw.js.git src/content/nw 
 cd src/content/nw
 git checkout $MAIN
 cd ../../.. # nwjs-build/nwjs
@@ -54,8 +54,9 @@ git checkout $MAIN
 cd ../.. # nwjs-build/nwjs
 
 # get source code
-gclient sync --with_branch_heads --nohooks
-./build/install-build-deps.sh
+gclient sync --with_branch_heads --nohooks --no-history
+pwd
+./src/build/install-build-deps.sh
 gclient runhooks
 
 # build ninja conf
