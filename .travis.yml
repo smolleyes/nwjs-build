@@ -1,5 +1,11 @@
 language: cpp
 
+os: linux
+
+dist: trusty
+
+sudo: required
+
 compiler:
   - clang
   - gcc
