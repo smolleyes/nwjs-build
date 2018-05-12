@@ -56,7 +56,7 @@ cd ../.. # nwjs-build/nwjs
 # get source code
 gclient sync --with_branch_heads --nohooks --no-history
 pwd
-./src/build/install-build-deps.sh --no-prompt
+./src/build/install-build-deps.sh --no-prompt --quick-check
 gclient runhooks
 
 # build ninja conf
