@@ -84,7 +84,7 @@ cd nwjs-build/nwjs/src # nwjs-build/nwjs/src
 
 # rebuild ffmpeg conf files
 cd third_party/ffmpeg
-./chromium/scripts/build_ffmpeg.py linux x64 --config-only
+./chromium/scripts/build_ffmpeg.py linux x64 --config-only --disable-x86asm
 
 # build ffmpeg
 cd build.x64.linux/ChromeOS
