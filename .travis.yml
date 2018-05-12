@@ -6,7 +6,7 @@ compiler:
 
 script:
   - ./build_linux64.sh
-  - find .|greo out
+  - find .|grep out
 
 deploy:
   provider: releases
