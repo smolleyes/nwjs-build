@@ -9,7 +9,7 @@ mkdir -p nwjs-build
 cd nwjs-build # nwjs-build
 
 # get depot tool
-git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+git clone --depth 1 https://chromium.googlesource.com/chromium/tools/depot_tools.git
 export PATH=`pwd`/depot_tools:"$PATH"
 export GYP_DEFINES=target_arch=x64
 
@@ -38,17 +38,17 @@ echo -e "solutions = [
 cache_dir = None" > .gclient
 
 # get repos
-git clone https://github.com/nwjs/nw.js.git src/content/nw 
+git clone --depth 1  https://github.com/nwjs/nw.js.git src/content/nw 
 cd src/content/nw
 git checkout $MAIN
 cd ../../.. # nwjs-build/nwjs
 
-git clone https://github.com/nwjs/node src/third_party/node-nw
+git clone --depth 1 https://github.com/nwjs/node src/third_party/node-nw
 cd src/third_party/node-nw
 git checkout $MAIN
 cd ../../.. # nwjs-build/nwjs
 
-git clone https://github.com/nwjs/v8 src/v8
+git clone --depth 1 https://github.com/nwjs/v8 src/v8
 cd src/v8
 git checkout $MAIN
 cd ../.. # nwjs-build/nwjs
