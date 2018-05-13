@@ -15,6 +15,7 @@ compiler:
   - gcc
 
 script:
+  - sudo apt-get install yasm
   - ./build_linux64.sh
 
 deploy:
