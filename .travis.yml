@@ -6,12 +6,7 @@ dist: trusty
 
 sudo: required
 
-cache:
-  directories:
-  - nwjs-build
-
 compiler:
-  - clang
   - gcc
 
 script:

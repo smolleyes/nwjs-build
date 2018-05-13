@@ -9,7 +9,7 @@ mkdir -p nwjs-build
 cd nwjs-build # nwjs-build
 
 # get depot tool
-git clone --depth 1 https://chromium.googlesource.com/chromium/tools/depot_tools.git
+git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
 export PATH=`pwd`/depot_tools:"$PATH"
 export GYP_DEFINES=target_arch=x64
 
@@ -38,25 +38,25 @@ echo -e "solutions = [
 cache_dir = None" > .gclient
 
 # get repos
-git clone --depth 1 https://github.com/nwjs/nw.js.git src/content/nw 
+git clone https://github.com/nwjs/nw.js.git src/content/nw 
 cd src/content/nw
 git checkout $MAIN
 cd ../../.. # nwjs-build/nwjs
 
-git clone --depth 1 https://github.com/nwjs/node src/third_party/node-nw
+git clone https://github.com/nwjs/node src/third_party/node-nw
 cd src/third_party/node-nw
 git checkout $MAIN
 cd ../../.. # nwjs-build/nwjs
 
-git clone --depth 1 https://github.com/nwjs/v8 src/v8
+git clone https://github.com/nwjs/v8 src/v8
 cd src/v8
 git checkout $MAIN
 cd ../.. # nwjs-build/nwjs
 
 # get source code
 gclient sync --with_branch_heads --nohooks --no-history
-pwd
 ./src/build/install-build-deps.sh --no-prompt --quick-check
+./src/third_party/instrumented_libraries/scripts/install-build-deps.sh --no-prompt --quick-check
 gclient runhooks
 
 # build ninja conf
@@ -64,7 +64,6 @@ cd src
 gn gen out/nw --args='is_debug=false is_component_ffmpeg=true target_cpu="x64" nwjs_sdk=true enable_nacl=false ffmpeg_branding="Chrome" proprietary_codecs=true enable_ac3_eac3_audio_demuxing=true enable_hevc_demuxing=true is_official_build=true enable_mse_mpeg2ts_stream_parser=true'
 
 cd ../../.. # ./
-
 # replace python build script lines
 echo -e "434,435c434,436
 <       '--enable-demuxer=ogg,matroska,wav,flac,mp3,mov',
