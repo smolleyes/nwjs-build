@@ -1,8 +1,9 @@
 version: 2
 jobs:
   build:
-      machine: true
-      
+    docker:
+      - image: buildpack-deps:xenial
+
     steps:
       - checkout
       - run:
