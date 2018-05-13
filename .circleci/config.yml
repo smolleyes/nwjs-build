@@ -6,6 +6,7 @@ jobs:
     resource_class: large
     steps:
       - checkout
+      - run: apt-get install -y sudo
       - run:
           name: Build
           command: sudo ./build_linux64.sh
