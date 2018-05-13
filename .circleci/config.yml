@@ -1,13 +1,14 @@
 version: 2
 jobs:
   build:
-    machine: true
     docker:
       - image: buildpack-deps:xenial
     resource_class: large
+    dependencies:
+      pre:
+        - sudo apt-get update;sudo apt-get install -y sudo
     steps:
       - checkout
-      - run: apt-get install -y sudo
       - run:
           name: Build
           command: sudo ./build_linux64.sh
