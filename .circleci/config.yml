@@ -4,9 +4,8 @@ jobs:
     docker:
       - image: buildpack-deps:xenial
     resource_class: large
-    working_directory: ~/nwjs-build
     steps:
       - checkout
       - run:
           name: Build
-          command: ./build_linux64.sh
+          command: sudo ./build_linux64.sh

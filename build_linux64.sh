@@ -1,5 +1,7 @@
 #!/bin/bash
 set -x
+whoami
+pwd
 MAIN='nw27'
 
 echo "Building nwjs from sources, with ffmpeg patches [branch: $MAIN]"
