@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: buildpack-deps:xenial
-
+  working_directory: ~/nwjs-build
     steps:
       - checkout
       - run:
