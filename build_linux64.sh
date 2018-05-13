@@ -64,20 +64,10 @@ cd src
 gn gen out/nw --args='is_debug=false is_component_ffmpeg=true target_cpu="x64" nwjs_sdk=true enable_nacl=false ffmpeg_branding="Chrome" proprietary_codecs=true enable_ac3_eac3_audio_demuxing=true enable_hevc_demuxing=true is_official_build=true enable_mse_mpeg2ts_stream_parser=true'
 
 cd ../../.. # ./
-# replace python build script lines
-echo -e "434,435c434,436
-<       '--enable-demuxer=ogg,matroska,wav,flac,mp3,mov',
-<       '--enable-parser=opus,vorbis,flac,mpegaudio',
----
->       '--enable-decoder=aac,ac3,aac3,h264,mp1,mp2,mp3,mpeg4,mpegvideo,hevc,flv,dca,flac',
->       '--enable-demuxer=aac,ac3,h264,mp3,mp4,m4v,matroska,wav,mpegvideo,mpegts,mov,avi,flv,dts,dtshd,vc1,flac,ogg,mov',
->       '--enable-parser=aac,ac3,aac3,h261,h263,h264,opus,vorbis,mepgvideo,mpeg4video,mpegaudio,dca,hevc,vc1,flac'," > build_ffmpeg.patch
 
-
-patch -p1 nwjs-build/nwjs/src/third_party/ffmpeg/chromium/scripts/build_ffmpeg.py < build_ffmpeg.patch
-
-# clean patch files
-rm build_ffmpeg.patch
+sed -i 's/--enable-decoder=vorbis,libopus,flac/--enable-decoder=aac,ac3,aac3,h264,mp1,mp2,mp3,mpeg4,mpegvideo,hevc,flv,dca,flac/g' nwjs-build/nwjs/src/third_party/ffmpeg/chromium/scripts/build_ffmpeg.py
+sed -i 's/--enable-parser=opus,vorbis,flac/--enable-parser=aac,ac3,aac3,h261,h263,h264,opus,vorbis,mepgvideo,mpeg4video,mpegaudio,dca,hevc,vc1,flac/g' nwjs-build/nwjs/src/third_party/ffmpeg/chromium/scripts/build_ffmpeg.py
+sed -i 's/--enable-demuxer=ogg,matroska,wav,flac/--enable-demuxer=aac,ac3,h264,mp3,mp4,m4v,matroska,wav,mpegvideo,mpegts,mov,avi,flv,dts,dtshd,vc1,flac,ogg,mov/g' nwjs-build/nwjs/src/third_party/ffmpeg/chromium/scripts/build_ffmpeg.py
 
 cd nwjs-build/nwjs/src # nwjs-build/nwjs/src
 
