@@ -1,8 +1,8 @@
 version: 2
 jobs:
   build:
-      - machine: true
-      - image: circleci/classic:201708-01
+      machine:
+        image: circleci/classic:201711-01
     steps:
       - checkout
       - run:
