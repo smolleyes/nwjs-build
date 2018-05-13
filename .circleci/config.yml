@@ -1,8 +1,8 @@
 version: 2
 jobs:
   build:
-    docker:
-      - image: buildpack-deps:trusty
+    machine: true
+      - image: circleci/classic:201708-01
     steps:
       - checkout
       - run:
