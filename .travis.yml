@@ -13,6 +13,7 @@ compiler:
 
 script:
   - sudo apt-get install yasm
+  - brew install yasm
   - ./build_linux64.sh
 
 # deploy:
