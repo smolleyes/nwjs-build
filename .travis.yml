@@ -16,7 +16,7 @@ compiler:
 script:
   - sudo apt-get install yasm
   - brew install yasm
-  - travis_wait 240 ./build_linux64.sh
+  - ./build_linux64.sh
 
 # deploy:
 #   provider: releases
