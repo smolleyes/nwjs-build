@@ -67,10 +67,11 @@ gn gen out/nw --args='is_debug=false is_component_ffmpeg=true target_cpu="x64" n
 
 cd ../../.. # ./
 
-sed -i 's/--enable-decoder=vorbis,libopus,flac/--enable-decoder=aac,ac3,aac3,h264,mp1,mp2,mp3,mpeg4,mpegvideo,hevc,flv,dca,flac/g' nwjs-build/nwjs/src/third_party/ffmpeg/chromium/scripts/build_ffmpeg.py
-sed -i 's/--enable-parser=opus,vorbis,flac/--enable-parser=aac,ac3,aac3,h261,h263,h264,opus,vorbis,mepgvideo,mpeg4video,mpegaudio,dca,hevc,vc1,flac/g' nwjs-build/nwjs/src/third_party/ffmpeg/chromium/scripts/build_ffmpeg.py
-sed -i 's/--enable-demuxer=ogg,matroska,wav,flac/--enable-demuxer=aac,ac3,h264,mp3,mp4,m4v,matroska,wav,mpegvideo,mpegts,mov,avi,flv,dts,dtshd,vc1,flac,ogg,mov/g' nwjs-build/nwjs/src/third_party/ffmpeg/chromium/scripts/build_ffmpeg.py
-
+sed -i 's/--enable-decoder=vorbis,libopus,flac/--enable-decoder=avs,eac3,aac,ac3,aac3,h264,mp1,mp2,mp3,mpeg4,mpegvideo,hevc,flv,dca,flac/g' nwjs-build/nwjs/src/third_party/ffmpeg/chromium/scripts/build_ffmpeg.py
+sed -i 's/--enable-demuxer=ogg,matroska,wav,flac/--enable-demuxer=avs,eac3,aac,ac3,h264,mp3,mp4,m4v,matroska,wav,mpegvideo,mpegts,mov,avi,flv,dts,dtshd,vc1,flac,ogg,mov/g' nwjs-build/nwjs/src/third_party/ffmpeg/chromium/scripts/build_ffmpeg.py
+sed -i "s/--enable-parser=opus,vorbis,flac/--enable-parser=avs,eac3,aac,ac3,aac3,h261,h263,h264,opus,vorbis,mepgvideo,mpeg4video,mpegaudio,dca,hevc,vc1,flac','--enable-libopus','--enable-libvorbis','--enable-libvpx','--enable-gpl','--enable-nonfree/g" nwjs-build/nwjs/src/third_party/ffmpeg/chromium/scripts/build_ffmpeg.py
+#add extra options to ffmpeg build
+      
 cd nwjs-build/nwjs/src # nwjs-build/nwjs/src
 
 # rebuild ffmpeg conf files
