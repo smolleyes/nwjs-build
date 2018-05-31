@@ -96,9 +96,10 @@ cd ..
 
 cd ../.. # nwjs-build/nwjs/src
 
+exit 0
 # generate ninja build files
 GYP_CHROMIUM_NO_ACTION=0 ./build/gyp_chromium -I third_party/node-nw/common.gypi third_party/node-nw/node.gyp
-exit 0
+
 # build nwjs
 ninja -C out/nw nwjs
 
