@@ -8,7 +8,9 @@ dist: trusty
 
 sudo: required
 
-cache: nwjs-build
+cache: 
+  directories:
+    - nwjs-build
 
 compiler:
   - gcc
