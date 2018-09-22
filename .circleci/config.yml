@@ -1,0 +1,20 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: buildpack-deps:xenial
+    resource_class: large
+    steps:
+      - checkout
+      - run:
+          name: Build
+          command: ./build_linux64.sh
+  build:
+    macos:
+      xcode: "9.0"
+      resource_class: large
+      steps:
+      - checkout
+      - run:
+        name: Build
+        command: ./build_linux64.sh
